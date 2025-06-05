@@ -9,5 +9,5 @@ await db.end();
 console.log("🌱 Database seeded.");
 
 async function seed() {
-  // TODO
+  const hashedPassword = await bcrypt.hash()
 }
