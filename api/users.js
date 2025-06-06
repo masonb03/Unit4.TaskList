@@ -26,7 +26,7 @@ router.post('/login', async(req, res) =>{
         return res.status(400).send({error: 'Missing information'});
 
     const result = await db.query(
-        `INSERT * FROM users WHERE name = $1`, [name]
+        `SELECT * FROM users WHERE name = $1`, [name]
     );
     const user = result.rows[0];
     if(!user)

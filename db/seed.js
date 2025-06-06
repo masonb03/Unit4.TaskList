@@ -1,4 +1,5 @@
-import db from "../db/client";
+import db from "./client.js";
+import bcrypt from "bcrypt";
 import { createTask } from "#db/queries/tasks";
 import { createUser } from "#db/queries/users";
 
@@ -8,6 +9,7 @@ await db.end();
 console.log("🌱 Database seeded.");
 
 async function seed() {
+  const password = "gamera"
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = await createUser({
