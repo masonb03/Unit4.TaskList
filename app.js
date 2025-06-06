@@ -1,17 +1,23 @@
 import express from "express";
 const app = express();
 export default app;
+import usersRouter from './api/users.js';
+import tasksRouter from './api/tasks.js';
+import dotenv from 'dotenv';
 
-app.use(express.json())
+dotenv.config();
 
-app.use((req, res, next) =>{
-  console.log(req.method, req.originalUrl)
-  next()
-})
+app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the TaskList API');
+});
+
+app.use('/users', usersRouter);
+app.use('/tasks', tasksRouter);
 
 app.get('/', (req, res) =>{
-    res.send('Welcome to the backend application!')
+    res.send('Welcome to the TaskList!')
 })
 
 

@@ -1,5 +1,4 @@
-import db from "#db/client";
-import bcrypr from "bcrypt";
+import db from "../db/client";
 import { createTask } from "#db/queries/tasks";
 import { createUser } from "#db/queries/users";
 

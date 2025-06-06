@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import db from "#db/client.js";
+import db from "../db/client.js";
 
 const router = express.Router();
 
@@ -11,12 +11,12 @@ router.post('/register', async(req, res) =>{
         return res.status(400).send({error: 'Missing information'});
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const res = await db.query(
+    const result = await db.query(
         `INSERT INTO users (name, password) VALUES ($1, $2) RETURNING id, name`,
         [name, hashedPassword]
     );
 
-    const token = jwt.sign({ id: res.rows[0].id, name }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: result.rows[0].id, name }, process.env.JWT_SECRET);
     res.send({ token });
 });
 
@@ -25,10 +25,10 @@ router.post('/login', async(req, res) =>{
     if(!name || !password)
         return res.status(400).send({error: 'Missing information'});
 
-    const res = await db.query(
+    const result = await db.query(
         `INSERT * FROM users WHERE name = $1`, [name]
     );
-    const user = res.rows[0];
+    const user = result.rows[0];
     if(!user)
         return res.status(400).send({error: 'Invalid information'});
 
